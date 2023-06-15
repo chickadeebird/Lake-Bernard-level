@@ -14,11 +14,10 @@ This is meant to be used as a standalone file for now. The python code is embedd
 
 <iframe width="900" height="800" frameborder="0" scrolling="no" src="//plotly.com/~chickadeebird/1.embed"></iframe>
 
-or
+which will display an interactive chart such as this:
 
 <div>
     <a href="https://plotly.com/~chickadeebird/1/?share_key=SbawAKXP1zfsLQmjUxXWnO" target="_blank" title="Lake Bernard Water Level" style="display: block; text-align: center;"><img src="https://plotly.com/~chickadeebird/1.png?share_key=SbawAKXP1zfsLQmjUxXWnO" alt="Lake Bernard Water Level" style="max-width: 100%;width: 600px;"  width="600" onerror="this.onerror=null;this.src='https://plotly.com/404.png';" /></a>
-    <script data-plotly="chickadeebird:1" sharekey-plotly="SbawAKXP1zfsLQmjUxXWnO" src="https://plotly.com/embed.js" async></script>
 </div>
 
 
