@@ -21,11 +21,17 @@ which will display an interactive chart such as this:
     <a href="https://plotly.com/~chickadeebird/1/?share_key=SbawAKXP1zfsLQmjUxXWnO" target="_blank" title="Lake Bernard Water Level" style="display: block; text-align: center;"><img src="https://plotly.com/~chickadeebird/1.png?share_key=SbawAKXP1zfsLQmjUxXWnO" alt="Lake Bernard Water Level" style="max-width: 100%;width: 600px;"  width="600" onerror="this.onerror=null;this.src='https://plotly.com/404.png';" /></a>
 </div>
 
+The newer version via streamlit embeds using this, and this version is recommended over the plotly version above:
+
+<iframe src="https://chickadeebird-lake-bernard-level-lakebernardstreamlit-akvozt.streamlit.app/?embed=true" height="600" style="width:100%;border:none">
+  <p>Your browser does not support iframes.</p>
+</iframe>
 
 
 ## Code
 
 Lake Bernard water level.py
+LakeBernardStreamlit.ph
 
 ---
 
