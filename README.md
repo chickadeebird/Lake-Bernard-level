@@ -23,15 +23,18 @@ which will display an interactive chart such as this:
 
 The newer version via streamlit embeds using this, and this version is recommended over the plotly version above:
 
-<iframe src="https://chickadeebird-lake-bernard-level-lakebernardstreamlit-akvozt.streamlit.app/?embed=true" height="600" style="width:100%;border:none">
-  <p>Your browser does not support iframes.</p>
-</iframe>
+<iframe src="https://chickadeebird-lake-bernard-level-lakebernardstreamlit-akvozt.streamlit.app/?embed=true" height="600" style="width:100%;border:none"></iframe>
+
+<div>
+    <a href="https://chickadeebird-lake-bernard-level-lakebernardstreamlit-akvozt.streamlit.app/" height="600" style="width:100%;border:none"</a>
+</div>
 
 
 ## Code
 
 Lake Bernard water level.py
-LakeBernardStreamlit.ph
+
+LakeBernardStreamlit.py
 
 ---
 
