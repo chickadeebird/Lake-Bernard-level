@@ -452,16 +452,16 @@ fig.append_trace(go.Line(x=df_historical['Day'], y=df_historical['Low'], name='L
 fig.append_trace(go.Line(x=df_historical['Day'], y=df_historical['Average'], name='Average', line_color='Blue'), row=1, col=1)
 fig.append_trace(go.Line(x=df_historical['Day'], y=df_historical['High'], name='High', line_color='Blue'), row=1, col=1)
 
+fig.append_trace(go.Scatter(x=day_list, y=group_list, name='Current', marker=dict(
+    color='Red',
+    size=4,
+)), row=1, col=1)
+
 fig.append_trace(
         go.Line(x=df_historical['Day'], y=df_precip['Total Precip (mm)'].to_list(), name='Precipitation'),
         row=2,
         col=1
     )
-
-fig.append_trace(go.Scatter(x=day_list, y=group_list, name='Current', marker=dict(
-    color='Red',
-    size=4,
-)), row=1, col=1)
 
 # plot via streamlit
 st.plotly_chart(fig)
