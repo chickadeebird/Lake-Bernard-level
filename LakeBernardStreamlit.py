@@ -6,6 +6,20 @@ import asyncio
 from datetime import datetime
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
+import numpy as np
+
+
+def compose_date(years, months=1, days=1, weeks=None, hours=None, minutes=None,
+                 seconds=None, milliseconds=None, microseconds=None, nanoseconds=None):
+    years = np.asarray(years) - 1970
+    months = np.asarray(months) - 1
+    days = np.asarray(days) - 1
+    types = ('<M8[Y]', '<m8[M]', '<m8[D]', '<m8[W]', '<m8[h]',
+             '<m8[m]', '<m8[s]', '<m8[ms]', '<m8[us]', '<m8[ns]')
+    vals = (years, months, days, weeks, hours, minutes, seconds,
+            milliseconds, microseconds, nanoseconds)
+    return sum(np.asarray(v, dtype=t) for t, v in zip(types, vals)
+               if v is not None)
 
 
 @st.cache_data
@@ -382,6 +396,14 @@ def get_historical_level_data():
     df = pd.DataFrame(historical_water_data_array,
                       columns=['Day', 'Low', 'Average', 'High'])
 
+    todays_date = datetime.today()
+    year = int(todays_date.year)
+    df['Year'] = year
+    df['Day'] = df['Day'].astype(int)
+    df['Date'] = compose_date(df['Year'], days=df['Day'])
+    df['Date'][0] = df['Date'][1]
+    df['Month'] = df['Date'].dt.strftime('%b')
+
     return df
 
 
@@ -440,17 +462,17 @@ df_recent['Day'] = df_recent['Date'].dt.dayofyear - 1
 df_recent['Level'] = df_recent['Value/Valeur'].astype(float).fillna(0.0)
 groups = df_recent.groupby(['Day'])['Level'].mean()
 group_list = groups.to_list()
-day_list = list(groups.index)
+day_list = df['Date'].to_list()[:len(group_list)]
 
-x_list = df_precip['Day chart'].to_list()
+x_list = df_historical['Month'].to_list()[:len(group_list)]
 y_list = df_precip['Total Precip (mm)'].to_list()
 
 # create plotly plots
 fig = make_subplots(rows=2, cols=1, shared_xaxes=True, vertical_spacing=0.01, row_heights=[0.8, 0.2])
 
-fig.append_trace(go.Line(x=df_historical['Day'], y=df_historical['Low'], name='Low', line_color='Blue'), row=1, col=1)
-fig.append_trace(go.Line(x=df_historical['Day'], y=df_historical['Average'], name='Average', line_color='Blue'), row=1, col=1)
-fig.append_trace(go.Line(x=df_historical['Day'], y=df_historical['High'], name='High', line_color='Blue'), row=1, col=1)
+fig.append_trace(go.Line(x=df_historical['Date'], y=df_historical['Low'], name='Low', line_color='Blue'), row=1, col=1)
+fig.append_trace(go.Line(x=df_historical['Date'], y=df_historical['Average'], name='Average', line_color='Blue'), row=1, col=1)
+fig.append_trace(go.Line(x=df_historical['Date'], y=df_historical['High'], name='High', line_color='Blue'), row=1, col=1)
 
 fig.append_trace(go.Scatter(x=day_list, y=group_list, name='Current', marker=dict(
     color='Red',
@@ -458,7 +480,7 @@ fig.append_trace(go.Scatter(x=day_list, y=group_list, name='Current', marker=dic
 )), row=1, col=1)
 
 fig.append_trace(
-        go.Line(x=df_historical['Day'], y=df_precip['Total Precip (mm)'].to_list(), name='Precipitation'),
+        go.Line(x=df_historical['Date'], y=df_precip['Total Precip (mm)'].to_list(), name='Precipitation'),
         row=2,
         col=1
     )
