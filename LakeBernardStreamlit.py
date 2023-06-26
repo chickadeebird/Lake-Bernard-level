@@ -396,12 +396,13 @@ def get_historical_level_data():
     df = pd.DataFrame(historical_water_data_array,
                       columns=['Day', 'Low', 'Average', 'High'])
 
+    df['Day'] += 1
     todays_date = datetime.today()
     year = int(todays_date.year)
     df['Year'] = year
     df['Day'] = df['Day'].astype(int)
     df['Date'] = compose_date(df['Year'], days=df['Day'])
-    df['Date'][0] = df['Date'][1]
+    df['Date'][-1] = df['Date'][-2]
     df['Month'] = df['Date'].dt.strftime('%b')
 
     return df
