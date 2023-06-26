@@ -462,7 +462,7 @@ df_recent['Day'] = df_recent['Date'].dt.dayofyear - 1
 df_recent['Level'] = df_recent['Value/Valeur'].astype(float).fillna(0.0)
 groups = df_recent.groupby(['Day'])['Level'].mean()
 group_list = groups.to_list()
-day_list = df['Date'].to_list()[:len(group_list)]
+day_list = df_historical['Date'].to_list()[:len(group_list)]
 
 x_list = df_historical['Month'].to_list()[:len(group_list)]
 y_list = df_precip['Total Precip (mm)'].to_list()
