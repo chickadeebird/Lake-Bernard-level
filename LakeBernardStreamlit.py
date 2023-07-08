@@ -402,7 +402,7 @@ def get_historical_level_data():
     df['Year'] = year
     df['Day'] = df['Day'].astype(int)
     df['Date'] = compose_date(df['Year'], days=df['Day'])
-    df.loc[-1,'Date'] = df.loc[-2,'Date']
+    # df.loc[-1,'Date'] = df.loc[-2,'Date']
     df['Month'] = df['Date'].dt.strftime('%b')
 
     return df
