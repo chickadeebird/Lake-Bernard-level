@@ -477,7 +477,7 @@ fig.append_trace(go.Line(x=df_historical['Date'], y=df_historical['Top of High']
 fig.append_trace(go.Line(x=df_historical['Date'], y=df_historical['Top of Normal'], name='Top of Normal', line_color='Blue'), row=1, col=1)
 fig.append_trace(go.Line(x=df_historical['Date'], y=df_historical['Bottom of Low'], name='Bottom of Low', line_color='Blue'), row=1, col=1)
 fig.append_trace(go.Line(x=df_historical['Date'], y=df_historical['Bottom of Normal'], name='Bottom of Normal', line_color='Blue'), row=1, col=1)
-fig.append_trace(go.Line(x=df_historical['Date'], y=df_historical['High'], name='High', line_color='Blue'), row=1, col=1)
+fig.append_trace(go.Line(x=df_historical['Date'], y=df_historical['Target'], name='Target', line_color='Blue'), row=1, col=1)
 
 fig.append_trace(go.Scatter(x=day_list, y=group_list, name='Current', marker=dict(
     color='Red',
