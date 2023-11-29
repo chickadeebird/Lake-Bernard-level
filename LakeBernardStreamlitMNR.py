@@ -475,7 +475,7 @@ fig = make_subplots(rows=2, cols=1, shared_xaxes=True, vertical_spacing=0.01, ro
 
 fig.append_trace(go.Line(x=df_historical['Date'], y=df_historical['Top of High'], name='Top of High', line_color='Blue'), row=1, col=1)
 fig.append_trace(go.Line(x=df_historical['Date'], y=df_historical['Top of Normal'], name='Top of Normal', line_color='Blue'), row=1, col=1)
-fig.append_trace(go.Line(x=df_historical['Date'], y=df_historical['Bottom of High'], name='Bottom of Low', line_color='Blue'), row=1, col=1)
+fig.append_trace(go.Line(x=df_historical['Date'], y=df_historical['Bottom of Low'], name='Bottom of Low', line_color='Blue'), row=1, col=1)
 fig.append_trace(go.Line(x=df_historical['Date'], y=df_historical['Bottom of Normal'], name='Bottom of Normal', line_color='Blue'), row=1, col=1)
 fig.append_trace(go.Line(x=df_historical['Date'], y=df_historical['High'], name='High', line_color='Blue'), row=1, col=1)
 
