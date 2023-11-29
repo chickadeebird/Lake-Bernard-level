@@ -473,8 +473,10 @@ y_list = df_precip['Total Precip (mm)'].to_list()
 # create plotly plots
 fig = make_subplots(rows=2, cols=1, shared_xaxes=True, vertical_spacing=0.01, row_heights=[0.8, 0.2])
 
-fig.append_trace(go.Line(x=df_historical['Date'], y=df_historical['Low'], name='Low', line_color='Blue'), row=1, col=1)
-fig.append_trace(go.Line(x=df_historical['Date'], y=df_historical['Average'], name='Average', line_color='Blue'), row=1, col=1)
+fig.append_trace(go.Line(x=df_historical['Date'], y=df_historical['Top of High'], name='Top of High', line_color='Blue'), row=1, col=1)
+fig.append_trace(go.Line(x=df_historical['Date'], y=df_historical['Top of Normal'], name='Top of Normal', line_color='Blue'), row=1, col=1)
+fig.append_trace(go.Line(x=df_historical['Date'], y=df_historical['Bottom of High'], name='Bottom of Low', line_color='Blue'), row=1, col=1)
+fig.append_trace(go.Line(x=df_historical['Date'], y=df_historical['Bottom of Normal'], name='Bottom of Normal', line_color='Blue'), row=1, col=1)
 fig.append_trace(go.Line(x=df_historical['Date'], y=df_historical['High'], name='High', line_color='Blue'), row=1, col=1)
 
 fig.append_trace(go.Scatter(x=day_list, y=group_list, name='Current', marker=dict(
