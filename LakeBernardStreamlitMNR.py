@@ -462,7 +462,7 @@ df_recent = get_recent_level_data()
 # condition the data to prepare for display
 df_recent['Date'] = pd.to_datetime(df_recent['Date'])
 df_recent['Day'] = df_recent['Date'].dt.dayofyear - 1
-df_recent['Level'] = df_recent['Value/Valeur'].astype(float).fillna(0.0)
+# df_recent['Level'] = df_recent['Value/Valeur'].astype(float).fillna(0.0)
 groups = df_recent.groupby(['Day'])['Level'].mean()
 group_list = groups.to_list()
 day_list = df_historical['Date'].to_list()[:len(group_list)]
