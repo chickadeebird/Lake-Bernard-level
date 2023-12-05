@@ -471,20 +471,20 @@ x_list = df_historical['Month'].to_list()[:len(group_list)]
 # y_list = df_precip['Total Precip (mm)'].to_list()
 
 # create plotly plots
-fig = make_subplots(rows=1, cols=1, shared_xaxes=True, vertical_spacing=0.0, row_heights=[1.0, 0.0])
+fig = go.Figure()
 # fig = make_subplots(rows=2, cols=1, shared_xaxes=True, vertical_spacing=0.01, row_heights=[0.8, 0.2])
 
-fig.append_trace(go.Line(x=df_historical['Date'], y=df_historical['Top of High'], name='Top of High Water Zone', line_color='Red'), row=1, col=1)
-fig.append_trace(go.Line(x=df_historical['Date'], y=df_historical['Top of Normal'], name='Top of Normal Operating Zone', line_color='Purple'), row=1, col=1)
-fig.append_trace(go.Line(x=df_historical['Date'], y=df_historical['Target'], name='Target Operating Level', line_color='Green'), row=1, col=1)
-fig.append_trace(go.Scatter(x=df_historical['Date'], y=df_historical['Best Practice'], name='Best Practice', line=dict(color='Green', dash='dash')), row=1, col=1)
-fig.append_trace(go.Scatter(x=df_historical['Date'], y=df_historical['Bottom of Normal'], name='Bottom of Normal Operating Zone', line=dict(color='Purple', dash='dash')), row=1, col=1)
-fig.append_trace(go.Scatter(x=df_historical['Date'], y=df_historical['Bottom of Low'], name='Bottom of Low Water Zone', line=dict(color='Red', dash='dash')), row=1, col=1)
+fig.add_trace(go.Line(x=df_historical['Date'], y=df_historical['Top of High'], name='Top of High Water Zone', line_color='Red'))
+fig.add_trace(go.Line(x=df_historical['Date'], y=df_historical['Top of Normal'], name='Top of Normal Operating Zone', line_color='Purple'))
+fig.add_trace(go.Line(x=df_historical['Date'], y=df_historical['Target'], name='Target Operating Level', line_color='Green'))
+fig.add_trace(go.Scatter(x=df_historical['Date'], y=df_historical['Best Practice'], name='Best Practice', line=dict(color='Green', dash='dash')))
+fig.add_trace(go.Scatter(x=df_historical['Date'], y=df_historical['Bottom of Normal'], name='Bottom of Normal Operating Zone', line=dict(color='Purple', dash='dash')))
+fig.add_trace(go.Scatter(x=df_historical['Date'], y=df_historical['Bottom of Low'], name='Bottom of Low Water Zone', line=dict(color='Red', dash='dash')))
 
-fig.append_trace(go.Scatter(x=day_list, y=group_list, name='Lake Bernard Mean Daily Levels', marker=dict(
+fig.add_trace(go.Scatter(x=day_list, y=group_list, name='Lake Bernard Mean Daily Levels', marker=dict(
     color='Blue',
     size=4,
-)), row=1, col=1)
+)))
 
 # fig.append_trace(
 #         go.Line(x=df_historical['Date'], y=df_precip['Total Precip (mm)'].to_list(), name='Precipitation'),
