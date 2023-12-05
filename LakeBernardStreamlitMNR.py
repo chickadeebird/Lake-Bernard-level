@@ -475,8 +475,8 @@ fig = make_subplots(rows=2, cols=1, shared_xaxes=True, vertical_spacing=0.01, ro
 
 fig.append_trace(go.Line(x=df_historical['Date'], y=df_historical['Top of High'], name='Top of High', line_color='Red'), row=1, col=1)
 fig.append_trace(go.Line(x=df_historical['Date'], y=df_historical['Top of Normal'], name='Top of Normal', line_color='Yellow'), row=1, col=1)
-fig.append_trace(go.Scatter(x=df_historical['Date'], y=df_historical['Bottom of Low'], name='Bottom of Low', line_color='Red', dash='dash'), row=1, col=1)
-fig.append_trace(go.Scatter(x=df_historical['Date'], y=df_historical['Bottom of Normal'], name='Bottom of Normal', line_color='Yellow',dash='dash'), row=1, col=1)
+fig.append_trace(go.Scatter(x=df_historical['Date'], y=df_historical['Bottom of Low'], name='Bottom of Low', line=dict(color='Red', dash='dash')), row=1, col=1)
+fig.append_trace(go.Scatter(x=df_historical['Date'], y=df_historical['Bottom of Normal'], name='Bottom of Normal', line=dict(color='Yellow', dash='dash')), row=1, col=1)
 fig.append_trace(go.Line(x=df_historical['Date'], y=df_historical['Target'], name='Target', line_color='Green'), row=1, col=1)
 
 fig.append_trace(go.Scatter(x=day_list, y=group_list, name='Current', marker=dict(
