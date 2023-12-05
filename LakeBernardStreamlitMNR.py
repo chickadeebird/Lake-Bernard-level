@@ -456,7 +456,7 @@ def get_recent_level_data():
 
 # get the required data
 df_historical = get_historical_level_data()
-df_precip = get_precipitation_data()
+# df_precip = get_precipitation_data()
 df_recent = get_recent_level_data()
 
 # condition the data to prepare for display
@@ -468,7 +468,7 @@ group_list = groups.to_list()
 day_list = df_historical['Date'].to_list()[:len(group_list)]
 
 x_list = df_historical['Month'].to_list()[:len(group_list)]
-y_list = df_precip['Total Precip (mm)'].to_list()
+# y_list = df_precip['Total Precip (mm)'].to_list()
 
 # create plotly plots
 fig = make_subplots(rows=2, cols=1, shared_xaxes=True, vertical_spacing=0.01, row_heights=[0.8, 0.2])
@@ -484,11 +484,11 @@ fig.append_trace(go.Scatter(x=day_list, y=group_list, name='Current', marker=dic
     size=4,
 )), row=1, col=1)
 
-fig.append_trace(
-        go.Line(x=df_historical['Date'], y=df_precip['Total Precip (mm)'].to_list(), name='Precipitation'),
-        row=2,
-        col=1
-    )
+# fig.append_trace(
+#         go.Line(x=df_historical['Date'], y=df_precip['Total Precip (mm)'].to_list(), name='Precipitation'),
+#         row=2,
+#         col=1
+#     )
 
 # plot via streamlit
 st.plotly_chart(fig)
