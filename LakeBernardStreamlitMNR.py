@@ -483,7 +483,7 @@ fig.add_trace(go.Scatter(x=df_historical['Date'], y=df_historical['Bottom of Low
 
 fig.add_trace(go.Scatter(x=day_list, y=group_list, name='Lake Bernard Mean Daily Levels', marker=dict(
     color='Blue',
-    size=4,
+    size=4
 )))
 
 # fig.append_trace(
