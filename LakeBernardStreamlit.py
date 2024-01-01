@@ -410,7 +410,11 @@ def get_historical_level_data():
 
 @st.cache_data
 def get_precipitation_data():
-    ec = ECHistorical(station_id=54604, year=2023, language="english", format="csv")
+    todays_date = datetime.today()
+
+    year = todays_date.year
+    
+    ec = ECHistorical(station_id=54604, year=year, language="english", format="csv")
 
     asyncio.run(ec.update())
 
