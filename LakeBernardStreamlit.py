@@ -414,7 +414,7 @@ def get_precipitation_data():
 
     year = todays_date.year
 
-    # year = 2023
+    year = 2024
     
     ec = ECHistorical(station_id=54604, year=year, language="english", format="csv")
 
