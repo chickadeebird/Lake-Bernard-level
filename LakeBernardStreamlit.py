@@ -413,6 +413,8 @@ def get_precipitation_data():
     todays_date = datetime.today()
 
     year = todays_date.year
+
+    year = 2023
     
     ec = ECHistorical(station_id=54604, year=year, language="english", format="csv")
 
@@ -433,6 +435,8 @@ def get_recent_level_data():
     start_string = str(year) + '-01-01 00:00:00'
 
     time_now_string = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+
+    time_now_string = "2023-12-30 00:00:00"
 
     download_url = 'https://wateroffice.ec.gc.ca/services/real_time_data/csv/inline?stations[]=02EA020&parameters[]=46&start_date=' + start_string + '&end_date=' + time_now_string
 
