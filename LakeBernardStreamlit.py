@@ -432,6 +432,9 @@ def get_recent_level_data():
     todays_date = datetime.today()
 
     year = todays_date.year
+
+    year = 2023
+    
     start_string = str(year) + '-01-01 00:00:00'
 
     time_now_string = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
