@@ -445,8 +445,8 @@ def get_recent_level_data():
     year = todays_date.year
 
     # year = 2023
-    
-    start_string = str(year) + '-01-01 00:00:00'
+
+    start_string = str(year-1) + '-01-01 00:00:00'
 
     time_now_string = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
@@ -470,7 +470,7 @@ def get_recent_level_data():
     df['Day'] = df['Date'].dt.dayofyear - 1
 
     df['Level'] = df['Value/Valeur'].astype(float).fillna(0.0)
-
+  
     return df
 
 
@@ -482,9 +482,18 @@ df_recent = get_recent_level_data()
 # condition the data to prepare for display
 df_recent['Date'] = pd.to_datetime(df_recent['Date'])
 df_recent['Day'] = df_recent['Date'].dt.dayofyear - 1
-df_recent['Level'] = df_recent['Value/Valeur'].astype(float).fillna(0.0)
-groups = df_recent.groupby(['Day'])['Level'].mean()
+# todays_date = datetime.today().tzinfo('UTC')
+# todays_date = datetime(todays_date.year, todays_date.month, todays_date.day)
+todays_date = datetime.utcnow()
+df_recent['Days ago'] = (datetime.now(timezone.utc) - df_recent['Date']).dt.days
+max_day = df_recent['Days ago'].max()
+df_recent['Days ago reverse'] = max_day - df_recent['Days ago']
+df_recent = df_recent.tail(365)
+# df_recent['Level'] = df_recent['Value/Valeur'].astype(float).fillna(0.0)
+# df_recent = df_recent.sort_values(['Days ago reverse'], ascending=True)
+groups = df_recent.groupby(['Days ago reverse'])['Level'].mean()
 group_list = groups.to_list()
+
 day_list = df_historical['Date'].to_list()[:len(group_list)]
 
 x_list = df_historical['Month'].to_list()[:len(group_list)]
