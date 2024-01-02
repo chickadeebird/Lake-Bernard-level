@@ -3,7 +3,7 @@ import pandas as pd
 import requests
 from env_canada import ECHistorical
 import asyncio
-from datetime import datetime
+from datetime import datetime, timezone
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 import numpy as np
