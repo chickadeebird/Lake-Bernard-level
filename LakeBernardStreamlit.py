@@ -494,6 +494,11 @@ df_recent['Days ago reverse'] = max_day - df_recent['Days ago']
 groups = df_recent.groupby(['Days ago reverse'])['Level'].mean().tail(365)
 group_list = groups.to_list()
 
+# wraparound the historical date chart
+todays_day_of_year = int(datetime.utcnow().strftime('%j'))
+# todays_date = 100
+new_historical = pd.concat([df_historical.tail(365-todays_day_of_year),df_historical.head(todays_day_of_year)])
+
 day_list = df_historical['Date'].to_list()[:len(group_list)]
 
 x_list = df_historical['Month'].to_list()[:len(group_list)]
