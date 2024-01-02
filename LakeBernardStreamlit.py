@@ -517,7 +517,7 @@ fig.append_trace(go.Scatter(x=day_list, y=group_list, name='Current', marker=dic
 )), row=1, col=1)
 
 fig.append_trace(
-        go.Line(x=df_precip['Date'], y=df_precip['Total Precip (mm)'].to_list(), name='Precipitation'),
+        go.Line(x=df_precip['Date/Time'], y=df_precip['Total Precip (mm)'].to_list(), name='Precipitation'),
         row=2,
         col=1
     )
