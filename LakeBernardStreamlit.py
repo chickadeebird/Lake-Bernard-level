@@ -414,15 +414,26 @@ def get_precipitation_data():
 
     year = todays_date.year
 
-    # year = 2024
-    
-    ec = ECHistorical(station_id=54604, year=year, language="english", format="csv")
+    ec_last_year = ECHistorical(station_id=54604, year=year-1, language="english", format="csv")
+    asyncio.run(ec_last_year.update())
 
-    asyncio.run(ec.update())
+    ec_this_year = ECHistorical(station_id=54604, year=year, language="english", format="csv")
+    asyncio.run(ec_this_year.update())
 
-    df = pd.read_csv(ec.station_data)
+    df_last_year = pd.read_csv(ec_last_year.station_data)
+    df_this_year = pd.read_csv(ec_this_year.station_data)
+    df_this_year['DOY'] = pd.to_datetime(df_this_year['Date/Time']).dt.dayofyear
+    doy_today = todays_date.timetuple().tm_yday
+    df_this_year = df_this_year[df_this_year['DOY'] <= doy_today]
+    df_last_year['DOY'] = pd.to_datetime(df_last_year['Date/Time']).dt.dayofyear
+
+    df = pd.concat([df_last_year, df_this_year])
+
+    # df = pd.read_csv(ec.station_data)
     df['Day chart'] = df['Day'] - 1
     df = df.fillna(0)
+
+    df = df.tail(365)
 
     return df
 
