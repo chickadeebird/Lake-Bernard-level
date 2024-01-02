@@ -410,13 +410,30 @@ def get_historical_level_data():
 
 @st.cache_data
 def get_precipitation_data():
-    ec = ECHistorical(station_id=54604, year=2023, language="english", format="csv")
+    todays_date = datetime.today()
 
-    asyncio.run(ec.update())
+    year = todays_date.year
 
-    df = pd.read_csv(ec.station_data)
+    ec_last_year = ECHistorical(station_id=54604, year=year-1, language="english", format="csv")
+    asyncio.run(ec_last_year.update())
+
+    ec_this_year = ECHistorical(station_id=54604, year=year, language="english", format="csv")
+    asyncio.run(ec_this_year.update())
+
+    df_last_year = pd.read_csv(ec_last_year.station_data)
+    df_this_year = pd.read_csv(ec_this_year.station_data)
+    df_this_year['DOY'] = pd.to_datetime(df_this_year['Date/Time']).dt.dayofyear
+    doy_today = todays_date.timetuple().tm_yday
+    df_this_year = df_this_year[df_this_year['DOY'] <= doy_today]
+    df_last_year['DOY'] = pd.to_datetime(df_last_year['Date/Time']).dt.dayofyear
+
+    df = pd.concat([df_last_year, df_this_year])
+
+    # df = pd.read_csv(ec.station_data)
     df['Day chart'] = df['Day'] - 1
     df = df.fillna(0)
+
+    df = df.tail(365)
 
     return df
 
@@ -426,9 +443,14 @@ def get_recent_level_data():
     todays_date = datetime.today()
 
     year = todays_date.year
-    start_string = str(year) + '-01-01 00:00:00'
+
+    # year = 2023
+
+    start_string = str(year-1) + '-01-01 00:00:00'
 
     time_now_string = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+
+    # time_now_string = "2023-12-30 00:00:00"
 
     download_url = 'https://wateroffice.ec.gc.ca/services/real_time_data/csv/inline?stations[]=02EA020&parameters[]=46&start_date=' + start_string + '&end_date=' + time_now_string
 
@@ -447,25 +469,35 @@ def get_recent_level_data():
     df['Date'] = pd.to_datetime(df['Date'])
     df['Day'] = df['Date'].dt.dayofyear - 1
 
-    local_offset = 320.85
-
-    df['Level'] = df['Value/Valeur'].astype(float).fillna(0.0) + local_offset
+    df['Level'] = df['Value/Valeur'].astype(float).fillna(0.0)
 
     return df
 
 
 # get the required data
 df_historical = get_historical_level_data()
-# df_precip = get_precipitation_data()
+df_precip = get_precipitation_data()
 df_recent = get_recent_level_data()
 
 # condition the data to prepare for display
 df_recent['Date'] = pd.to_datetime(df_recent['Date'])
 df_recent['Day'] = df_recent['Date'].dt.dayofyear - 1
+# todays_date = datetime.today().tzinfo('UTC')
+# todays_date = datetime(todays_date.year, todays_date.month, todays_date.day)
+todays_date = datetime.utcnow()
+df_recent['Days ago'] = (datetime.now(timezone.utc) - df_recent['Date']).dt.days
+max_day = df_recent['Days ago'].max()
+df_recent['Days ago reverse'] = max_day - df_recent['Days ago']
+# df_recent = df_recent.tail(365)
 # df_recent['Level'] = df_recent['Value/Valeur'].astype(float).fillna(0.0)
-groups = df_recent.groupby(['Day'])['Level'].mean()
+# df_recent = df_recent.sort_values(['Days ago reverse'], ascending=True)
+groups = df_recent.groupby(['Days ago reverse'])['Level'].mean().tail(365)
 group_list = groups.to_list()
-day_list = df_historical['Date'].to_list()[:len(group_list)]
+
+# wraparound the historical date chart
+todays_day_of_year = int(datetime.utcnow().strftime('%j'))
+# todays_date = 100
+new_historical = pd.concat([df_historical.tail(365-todays_day_of_year),df_historical.head(todays_day_of_year)])
 
 x_list = df_historical['Month'].to_list()[:len(group_list)]
 # y_list = df_precip['Total Precip (mm)'].to_list()
@@ -474,14 +506,14 @@ x_list = df_historical['Month'].to_list()[:len(group_list)]
 fig = go.Figure()
 # fig = make_subplots(rows=2, cols=1, shared_xaxes=True, vertical_spacing=0.01, row_heights=[0.8, 0.2])
 
-fig.add_trace(go.Scatter(x=df_historical['Date'], y=df_historical['Top of High'], name='Top of High Water Zone', line_color='Red'))
-fig.add_trace(go.Scatter(x=df_historical['Date'], y=df_historical['Top of Normal'], name='Top of Normal Operating Zone', line_color='Purple'))
-fig.add_trace(go.Scatter(x=df_historical['Date'], y=df_historical['Target'], name='Target Operating Level', line_color='Green'))
-fig.add_trace(go.Scatter(x=df_historical['Date'], y=df_historical['Best Practice'], name='Best Practice', line=dict(color='Green', dash='dash')))
-fig.add_trace(go.Scatter(x=df_historical['Date'], y=df_historical['Bottom of Normal'], name='Bottom of Normal Operating Zone', line=dict(color='Purple', dash='dash')))
-fig.add_trace(go.Scatter(x=df_historical['Date'], y=df_historical['Bottom of Low'], name='Bottom of Low Water Zone', line=dict(color='Red', dash='dash')))
+fig.add_trace(go.Scatter(x=df_precip['Date/Time'], y=df_historical['Top of High'], name='Top of High Water Zone', line_color='Red'))
+fig.add_trace(go.Scatter(x=df_precip['Date/Time'], y=df_historical['Top of Normal'], name='Top of Normal Operating Zone', line_color='Purple'))
+fig.add_trace(go.Scatter(x=df_precip['Date/Time'], y=df_historical['Target'], name='Target Operating Level', line_color='Green'))
+fig.add_trace(go.Scatter(x=df_precip['Date/Time'], y=df_historical['Best Practice'], name='Best Practice', line=dict(color='Green', dash='dash')))
+fig.add_trace(go.Scatter(x=df_precip['Date/Time'], y=df_historical['Bottom of Normal'], name='Bottom of Normal Operating Zone', line=dict(color='Purple', dash='dash')))
+fig.add_trace(go.Scatter(x=df_precip['Date/Time'], y=df_historical['Bottom of Low'], name='Bottom of Low Water Zone', line=dict(color='Red', dash='dash')))
 
-fig.add_trace(go.Scatter(x=day_list, y=group_list, name='Lake Bernard Mean Daily Levels', marker=dict(
+fig.add_trace(go.Scatter(x=df_precip['Date/Time'], y=group_list, name='Lake Bernard Mean Daily Levels', marker=dict(
     color='Blue',
     size=4
 )))
