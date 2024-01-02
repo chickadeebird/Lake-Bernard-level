@@ -511,7 +511,7 @@ fig.append_trace(go.Line(x=df_precip['Date/Time'], y=df_historical['Low'], name=
 fig.append_trace(go.Line(x=df_precip['Date/Time'], y=df_historical['Average'], name='Average', line_color='Blue'), row=1, col=1)
 fig.append_trace(go.Line(x=df_precip['Date/Time'], y=df_historical['High'], name='High', line_color='Blue'), row=1, col=1)
 
-fig.append_trace(go.Scatter(x=day_list, y=group_list, name='Current', marker=dict(
+fig.append_trace(go.Scatter(x=df_precip['Date/Time'], y=group_list, name='Current', marker=dict(
     color='Red',
     size=4,
 )), row=1, col=1)
