@@ -488,10 +488,10 @@ todays_date = datetime.utcnow()
 df_recent['Days ago'] = (datetime.now(timezone.utc) - df_recent['Date']).dt.days
 max_day = df_recent['Days ago'].max()
 df_recent['Days ago reverse'] = max_day - df_recent['Days ago']
-df_recent = df_recent.tail(365)
+# df_recent = df_recent.tail(365)
 # df_recent['Level'] = df_recent['Value/Valeur'].astype(float).fillna(0.0)
 # df_recent = df_recent.sort_values(['Days ago reverse'], ascending=True)
-groups = df_recent.groupby(['Days ago reverse'])['Level'].mean()
+groups = df_recent.groupby(['Days ago reverse'])['Level'].mean().tail(365)
 group_list = groups.to_list()
 
 day_list = df_historical['Date'].to_list()[:len(group_list)]
