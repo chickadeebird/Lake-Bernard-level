@@ -469,7 +469,7 @@ def get_recent_level_data():
     df['Date'] = pd.to_datetime(df['Date'])
     df['Day'] = df['Date'].dt.dayofyear - 1
 
-    df['Level'] = df['Value/Valeur'].astype(float).fillna(0.0)
+    df['Level'] = df['Value/Valeur'].astype(float).fillna(0.0) + 320.85
 
     return df
 
