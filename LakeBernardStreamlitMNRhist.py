@@ -836,7 +836,7 @@ df_historical = get_historical_data().head(365)
 # create plotly plots
 fig = go.Figure()
 # fig = make_subplots(rows=2, cols=1, shared_xaxes=True, vertical_spacing=0.01, row_heights=[0.8, 0.2])
-df_target['Date'] = df_target['Day']
+# df_target['Date'] = df_target['Day']
 
 fig.add_trace(go.Scatter(x=df_target['Date'], y=df_target['Top of High'], name='Top of High Water Zone', line_color='Red'))
 fig.add_trace(go.Scatter(x=df_target['Date'], y=df_target['Top of Normal'], name='Top of Normal Operating Zone', line_color='Purple'))
