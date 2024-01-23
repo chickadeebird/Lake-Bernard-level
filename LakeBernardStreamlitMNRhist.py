@@ -838,34 +838,34 @@ fig = go.Figure()
 # fig = make_subplots(rows=2, cols=1, shared_xaxes=True, vertical_spacing=0.01, row_heights=[0.8, 0.2])
 # df_target['Date'] = df_target['Day']
 
-fig.add_trace(go.Scatter(x=df_target['Date'], y=df_target['Top of High'], name='Top of High Water Zone', line_color='Red'))
-fig.add_trace(go.Scatter(x=df_target['Date'], y=df_target['Top of Normal'], name='Top of Normal Operating Zone', line_color='Purple'))
-fig.add_trace(go.Scatter(x=df_target['Date'], y=df_target['Target'], name='Target Operating Level', line_color='Green'))
-fig.add_trace(go.Scatter(x=df_target['Date'], y=df_target['Best Practice'], name='Best Practice', line=dict(color='Green', dash='dash')))
-fig.add_trace(go.Scatter(x=df_target['Date'], y=df_target['Bottom of Normal'], name='Bottom of Normal Operating Zone', line=dict(color='Purple', dash='dash')))
-fig.add_trace(go.Scatter(x=df_target['Date'], y=df_target['Bottom of Low'], name='Bottom of Low Water Zone', line=dict(color='Red', dash='dash')))
+fig.add_trace(go.Scatter(x=df_target['Month'], y=df_target['Top of High'], name='Top of High Water Zone', line_color='Red'))
+fig.add_trace(go.Scatter(x=df_target['Month'], y=df_target['Top of Normal'], name='Top of Normal Operating Zone', line_color='Purple'))
+fig.add_trace(go.Scatter(x=df_target['Month'], y=df_target['Target'], name='Target Operating Level', line_color='Green'))
+fig.add_trace(go.Scatter(x=df_target['Month'], y=df_target['Best Practice'], name='Best Practice', line=dict(color='Green', dash='dash')))
+fig.add_trace(go.Scatter(x=df_target['Month'], y=df_target['Bottom of Normal'], name='Bottom of Normal Operating Zone', line=dict(color='Purple', dash='dash')))
+fig.add_trace(go.Scatter(x=df_target['Month'], y=df_target['Bottom of Low'], name='Bottom of Low Water Zone', line=dict(color='Red', dash='dash')))
 
-fig.add_trace(go.Scatter(x=df_target['Date'], y=df_historical['2023'], name='2023', marker=dict(
+fig.add_trace(go.Scatter(x=df_target['Month'], y=df_historical['2023'], name='2023', marker=dict(
     color='Blue',
     size=4
 )))
 
-fig.add_trace(go.Scatter(x=df_target['Date'], y=df_historical['2022'], name='2022', marker=dict(
+fig.add_trace(go.Scatter(x=df_target['Month'], y=df_historical['2022'], name='2022', marker=dict(
     color='Blue',
     size=4
 )))
 
-fig.add_trace(go.Scatter(x=df_target['Date'], y=df_historical['2021'], name='2021', marker=dict(
+fig.add_trace(go.Scatter(x=df_target['Month'], y=df_historical['2021'], name='2021', marker=dict(
     color='Blue',
     size=4
 )))
 
-fig.add_trace(go.Scatter(x=df_target['Date'], y=df_historical['2020'], name='2020', marker=dict(
+fig.add_trace(go.Scatter(x=df_target['Month'], y=df_historical['2020'], name='2020', marker=dict(
     color='Blue',
     size=4
 )))
 
-fig.add_trace(go.Scatter(x=df_target['Date'], y=df_historical['2019'], name='2019', marker=dict(
+fig.add_trace(go.Scatter(x=df_target['Month'], y=df_historical['2019'], name='2019', marker=dict(
     color='Blue',
     size=4
 )))
