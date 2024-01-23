@@ -872,7 +872,7 @@ fig.add_trace(go.Scatter(x=df_target['Date'], y=df_historical['2019'], name='201
     size=4
 )))
 
-fig.update_layout(xaxis=dict(tickformat="%B"))
+fig.update_layout(xaxis=dict(tickformat="%b"))
 
 # fig.append_trace(
 #         go.Line(x=df_historical['Date'], y=df_precip['Total Precip (mm)'].to_list(), name='Precipitation'),
