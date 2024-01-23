@@ -400,6 +400,8 @@ def get_target_values():
     todays_date = datetime.today()
     year = int(todays_date.year)
     df['Year'] = year
+    # override for now
+    df['Year'] = 2023
     df['Day'] = df['Day'].astype(int)
     df['Date'] = compose_date(df['Year'], days=df['Day'])
     # df.loc[-1,'Date'] = df.loc[-2,'Date']
