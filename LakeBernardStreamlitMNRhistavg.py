@@ -1174,6 +1174,10 @@ def get_historical_level_data():
     df['Date'][0] = df['Date'][1]
     df['Month'] = df['Date'].dt.strftime('%b')
 
+    df['Low'] = df['Low'] + 320.85
+    df['Average'] = df['Average'] + 320.85
+    df['High'] = df['High'] + 320.85
+
     return df
 
 
